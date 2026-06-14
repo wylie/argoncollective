@@ -28,16 +28,16 @@ const projects = [
 ---
 
 <BaseLayout title={siteTitle} description={siteDescription}>
-  <main id="main">
-    <section class="hero section">
-      <div class="shell shell--wide hero__inner">
+  <main id="main" class="page">
+    <section class="section hero" aria-labelledby="hero-title">
+      <div class="container hero__inner">
         <p class="eyebrow">Independent software studio</p>
-        <h1>Argon Collective LLC</h1>
-        <p class="tagline">
+        <h1 id="hero-title">Argon Collective LLC</h1>
+        <p class="tagline measure measure--tagline">
           Thoughtful software for readers, communities, and the people who
           support them.
         </p>
-        <p class="lede">
+        <p class="lede measure">
           Argon Collective builds practical software designed to serve real
           people and organizations, with a focus on clarity, reliability, and
           day-to-day usefulness.
@@ -45,13 +45,13 @@ const projects = [
       </div>
     </section>
 
-    <section class="section">
-      <div class="shell shell--reading stack">
+    <section class="section" aria-labelledby="about-title">
+      <div class="container stack">
         <div class="section-heading">
           <p class="eyebrow">About</p>
-          <h2>Small by design, built with care.</h2>
+          <h2 id="about-title">Small by design, built with care.</h2>
         </div>
-        <p class="body-copy">
+        <p class="body-copy measure">
           Argon Collective LLC creates software with people in mind. From
           helping readers discover their next favorite book to supporting the
           organizations that bring communities together, we believe technology
@@ -60,13 +60,13 @@ const projects = [
       </div>
     </section>
 
-    <section class="section">
-      <div class="shell shell--projects stack">
+    <section class="section" aria-labelledby="projects-title">
+      <div class="container stack">
         <div class="section-heading">
           <p class="eyebrow">Projects</p>
-          <h2>Focused tools for real communities.</h2>
+          <h2 id="projects-title">Focused tools for real communities.</h2>
         </div>
-        <div class="project-grid" aria-label="Projects">
+        <div class="project-grid">
           {
             projects.map((project) => (
               <article
@@ -101,6 +101,7 @@ const projects = [
                     href={project.href}
                     target="_blank"
                     rel="noreferrer"
+                    aria-label={`${project.linkLabel} (opens in a new tab)`}
                   >
                     {project.linkLabel}
                   </a>
@@ -123,13 +124,13 @@ const projects = [
       </div>
     </section>
 
-    <section class="section">
-      <div class="shell shell--reading contact">
+    <section class="section" aria-labelledby="contact-title">
+      <div class="container contact">
         <div class="section-heading">
           <p class="eyebrow">Contact</p>
-          <h2>Interested in our work or have a question?</h2>
+          <h2 id="contact-title">Interested in our work or have a question?</h2>
         </div>
-        <p class="body-copy">We&apos;d love to hear from you.</p>
+        <p class="body-copy measure">We&apos;d love to hear from you.</p>
         <a class="contact-link" href="mailto:hello@argoncollective.com">
           Email hello@argoncollective.com
         </a>
@@ -138,7 +139,7 @@ const projects = [
   </main>
 
   <footer class="footer">
-    <div class="shell footer__inner">
+    <div class="container footer__inner">
       <p>Argon Collective LLC</p>
       <p>{new Date().getFullYear()}</p>
       <p>Built with Astro.</p>
@@ -147,25 +148,21 @@ const projects = [
 </BaseLayout>
 
 <style>
-  .section {
-    padding: 1.5rem 1.25rem 0;
+  .page {
+    padding: 0 var(--page-gutter) 0;
   }
 
-  .shell {
-    width: min(calc(100% - 2rem), var(--max-width));
+  .section {
+    padding-top: 1.5rem;
+  }
+
+  .container {
+    width: min(100%, var(--page-max-width));
     margin: 0 auto;
   }
 
-  .shell--wide {
-    max-width: 76rem;
-  }
-
-  .shell--reading {
-    max-width: 70rem;
-  }
-
-  .shell--projects {
-    max-width: 78rem;
+  .measure {
+    max-width: 68ch;
   }
 
   .stack {
@@ -213,13 +210,15 @@ const projects = [
   }
 
   h1 {
-    max-width: 12ch;
-    font-size: clamp(2.5rem, 8vw, 4.75rem);
+    max-width: none;
+    font-size: clamp(2.4rem, 6vw, 4.85rem);
+    text-wrap: balance;
   }
 
   h2 {
-    max-width: 22ch;
-    font-size: clamp(1.85rem, 5vw, 2.75rem);
+    max-width: none;
+    font-size: clamp(1.85rem, 4vw, 2.75rem);
+    text-wrap: balance;
   }
 
   h3 {
@@ -228,15 +227,17 @@ const projects = [
   }
 
   .tagline {
-    max-width: 32rem;
     margin-top: 1rem;
     font-size: clamp(1.15rem, 3vw, 1.5rem);
     color: var(--text);
   }
 
+  .measure--tagline {
+    max-width: 34rem;
+  }
+
   .lede,
   .body-copy {
-    max-width: 68ch;
     color: var(--muted);
     font-size: 1.05rem;
   }
@@ -272,8 +273,9 @@ const projects = [
   }
 
   .card:has(a:focus-visible) {
-    border-color: rgba(35, 87, 137, 0.4);
+    border-color: rgba(31, 79, 123, 0.5);
     background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 0 0 4px rgba(31, 79, 123, 0.12);
   }
 
   .card__header {
@@ -323,7 +325,7 @@ const projects = [
     display: inline-flex;
     align-items: center;
     width: fit-content;
-    min-height: 2.75rem;
+    min-height: 2.9rem;
     font-weight: 600;
     text-decoration-thickness: 0.08em;
   }
@@ -340,7 +342,7 @@ const projects = [
     align-items: center;
     justify-content: center;
     width: fit-content;
-    min-height: 3.5rem;
+    min-height: 3.75rem;
     padding: 0.9rem 1.2rem;
     border-radius: 999px;
     background: var(--accent);
@@ -354,7 +356,7 @@ const projects = [
   }
 
   .footer {
-    padding: 2rem 1.25rem 2.5rem;
+    padding: 2rem var(--page-gutter) 2.5rem;
   }
 
   .footer__inner {
