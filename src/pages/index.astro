@@ -1,0 +1,260 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const siteTitle = "Argon Collective LLC";
+const siteDescription =
+  "Independent software studio creating thoughtful tools for readers, communities, and the organizations that support them.";
+
+const projects = [
+  {
+    name: "Dogeared",
+    description:
+      "A community-minded book tracking and discovery app designed to help readers organize their bookshelves, discover new favorites, and connect through a shared love of reading.",
+  },
+  {
+    name: "Cairn",
+    description:
+      "Modern operations software designed for climbing gyms, recreation centers, and other community-focused organizations that need reliable, easy-to-use tools.",
+  },
+];
+---
+
+<BaseLayout title={siteTitle} description={siteDescription}>
+  <main id="main">
+    <section class="hero section">
+      <div class="shell hero__inner">
+        <p class="eyebrow">Independent software studio</p>
+        <h1>Argon Collective LLC</h1>
+        <p class="tagline">
+          Thoughtful software for readers, communities, and the people who
+          support them.
+        </p>
+        <p class="lede">
+          Argon Collective builds practical software designed to serve real
+          people and organizations, with a focus on clarity, reliability, and
+          day-to-day usefulness.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell stack">
+        <div class="section-heading">
+          <p class="eyebrow">About</p>
+          <h2>Small by design, built with care.</h2>
+        </div>
+        <p class="body-copy">
+          Argon Collective LLC creates software with people in mind. From
+          helping readers discover their next favorite book to supporting the
+          organizations that bring communities together, we believe technology
+          works best when it is practical, approachable, and built with care.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell stack">
+        <div class="section-heading">
+          <p class="eyebrow">Projects</p>
+          <h2>Focused tools for real communities.</h2>
+        </div>
+        <div class="project-grid" aria-label="Projects">
+          {
+            projects.map((project) => (
+              <article class="card">
+                <h3>{project.name}</h3>
+                <p>{project.description}</p>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell contact">
+        <div class="section-heading">
+          <p class="eyebrow">Contact</p>
+          <h2>Interested in our work or have a question?</h2>
+        </div>
+        <p class="body-copy">We&apos;d love to hear from you.</p>
+        <a class="contact-link" href="mailto:hello@argoncollective.com">
+          Email hello@argoncollective.com
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer__inner">
+      <p>Argon Collective LLC</p>
+      <p>{new Date().getFullYear()}</p>
+      <p>Built with Astro.</p>
+    </div>
+  </footer>
+</BaseLayout>
+
+<style>
+  .section {
+    padding: 1.5rem 1.25rem 0;
+  }
+
+  .shell {
+    width: min(calc(100% - 2rem), var(--max-width));
+    margin: 0 auto;
+  }
+
+  .stack {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .hero {
+    padding-top: 1.25rem;
+  }
+
+  .hero__inner,
+  .contact,
+  .card {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
+  }
+
+  .hero__inner {
+    padding: 2rem;
+    border-radius: calc(var(--radius) + 4px);
+  }
+
+  .eyebrow {
+    margin: 0 0 0.75rem;
+    color: var(--accent);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  h1,
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+
+  h1,
+  h2 {
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  h1 {
+    max-width: 12ch;
+    font-size: clamp(2.5rem, 8vw, 4.75rem);
+  }
+
+  h2 {
+    max-width: 16ch;
+    font-size: clamp(1.85rem, 5vw, 2.75rem);
+  }
+
+  h3 {
+    font-size: 1.3rem;
+    line-height: 1.2;
+  }
+
+  .tagline {
+    max-width: 32rem;
+    margin-top: 1rem;
+    font-size: clamp(1.15rem, 3vw, 1.5rem);
+    color: var(--text);
+  }
+
+  .lede,
+  .body-copy,
+  .card p {
+    max-width: 42rem;
+    color: var(--muted);
+    font-size: 1.05rem;
+  }
+
+  .lede {
+    margin-top: 1.25rem;
+  }
+
+  .section-heading {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .project-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .card {
+    display: grid;
+    gap: 0.9rem;
+    padding: 1.4rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .contact {
+    display: grid;
+    gap: 1rem;
+    padding: 1.75rem;
+    border-radius: var(--radius);
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    min-height: 3.5rem;
+    padding: 0.9rem 1.2rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .contact-link:hover {
+    background: #1c466c;
+  }
+
+  .footer {
+    padding: 2rem 1.25rem 2.5rem;
+  }
+
+  .footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  @media (min-width: 48rem) {
+    .section {
+      padding-top: 2rem;
+    }
+
+    .hero {
+      padding-top: 2rem;
+    }
+
+    .hero__inner {
+      padding: 3.5rem;
+    }
+
+    .project-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .footer__inner {
+      justify-content: space-between;
+    }
+  }
+</style>
