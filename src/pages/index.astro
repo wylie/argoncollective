@@ -8,13 +8,21 @@ const siteDescription =
 const projects = [
   {
     name: "Dogeared",
+    href: "https://dogeared.app",
+    linkLabel: "Visit Dogeared",
+    status: null,
     description:
       "A community-minded book tracking and discovery app designed to help readers organize their bookshelves, discover new favorites, and connect through a shared love of reading.",
   },
   {
     name: "Cairn",
+    href: null,
+    linkLabel: "Contact Argon Collective about Cairn",
+    status: "Coming Soon",
     description:
       "Modern operations software designed for climbing gyms, recreation centers, and other community-focused organizations that need reliable, easy-to-use tools.",
+    detail:
+      "Cairn is not publicly available yet. Get in touch for more information.",
   },
 ];
 ---
@@ -22,7 +30,7 @@ const projects = [
 <BaseLayout title={siteTitle} description={siteDescription}>
   <main id="main">
     <section class="hero section">
-      <div class="shell hero__inner">
+      <div class="shell shell--wide hero__inner">
         <p class="eyebrow">Independent software studio</p>
         <h1>Argon Collective LLC</h1>
         <p class="tagline">
@@ -38,7 +46,7 @@ const projects = [
     </section>
 
     <section class="section">
-      <div class="shell stack">
+      <div class="shell shell--reading stack">
         <div class="section-heading">
           <p class="eyebrow">About</p>
           <h2>Small by design, built with care.</h2>
@@ -53,7 +61,7 @@ const projects = [
     </section>
 
     <section class="section">
-      <div class="shell stack">
+      <div class="shell shell--projects stack">
         <div class="section-heading">
           <p class="eyebrow">Projects</p>
           <h2>Focused tools for real communities.</h2>
@@ -61,9 +69,53 @@ const projects = [
         <div class="project-grid" aria-label="Projects">
           {
             projects.map((project) => (
-              <article class="card">
-                <h3>{project.name}</h3>
+              <article
+                class:list={[
+                  "card",
+                  { "card--interactive": Boolean(project.href) },
+                ]}
+              >
+                <div class="card__header">
+                  <h3>
+                    {project.href ? (
+                      <a
+                        class="card__title-link"
+                        href={project.href}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {project.name}
+                      </a>
+                    ) : (
+                      project.name
+                    )}
+                  </h3>
+                  {project.status && (
+                    <p class="card__status">{project.status}</p>
+                  )}
+                </div>
                 <p>{project.description}</p>
+                {project.href ? (
+                  <a
+                    class="card__link"
+                    href={project.href}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {project.linkLabel}
+                  </a>
+                ) : (
+                  <p class="card__detail">
+                    {project.detail}{" "}
+                    <a
+                      class="card__inline-link"
+                      href="mailto:hello@argoncollective.com"
+                    >
+                      Contact Argon Collective
+                    </a>
+                    .
+                  </p>
+                )}
               </article>
             ))
           }
@@ -72,7 +124,7 @@ const projects = [
     </section>
 
     <section class="section">
-      <div class="shell contact">
+      <div class="shell shell--reading contact">
         <div class="section-heading">
           <p class="eyebrow">Contact</p>
           <h2>Interested in our work or have a question?</h2>
@@ -102,6 +154,18 @@ const projects = [
   .shell {
     width: min(calc(100% - 2rem), var(--max-width));
     margin: 0 auto;
+  }
+
+  .shell--wide {
+    max-width: 76rem;
+  }
+
+  .shell--reading {
+    max-width: 70rem;
+  }
+
+  .shell--projects {
+    max-width: 78rem;
   }
 
   .stack {
@@ -154,7 +218,7 @@ const projects = [
   }
 
   h2 {
-    max-width: 16ch;
+    max-width: 22ch;
     font-size: clamp(1.85rem, 5vw, 2.75rem);
   }
 
@@ -171,9 +235,8 @@ const projects = [
   }
 
   .lede,
-  .body-copy,
-  .card p {
-    max-width: 42rem;
+  .body-copy {
+    max-width: 68ch;
     color: var(--muted);
     font-size: 1.05rem;
   }
@@ -194,9 +257,75 @@ const projects = [
 
   .card {
     display: grid;
-    gap: 0.9rem;
+    gap: 1rem;
     padding: 1.4rem;
     border-radius: var(--radius-sm);
+    transition:
+      border-color 150ms ease,
+      background-color 150ms ease,
+      transform 150ms ease;
+  }
+
+  .card--interactive:hover {
+    border-color: rgba(35, 87, 137, 0.24);
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  .card:has(a:focus-visible) {
+    border-color: rgba(35, 87, 137, 0.4);
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .card__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .card__title-link,
+  .card__link,
+  .card__inline-link {
+    color: var(--accent);
+    text-decoration-color: rgba(35, 87, 137, 0.3);
+    text-underline-offset: 0.18em;
+  }
+
+  .card__title-link {
+    text-decoration: none;
+  }
+
+  .card__title-link:hover,
+  .card__link:hover,
+  .card__inline-link:hover {
+    text-decoration-color: currentColor;
+  }
+
+  .card__status {
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.88rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .card p,
+  .card__detail {
+    max-width: none;
+    color: var(--muted);
+    font-size: 1.05rem;
+  }
+
+  .card__link {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    min-height: 2.75rem;
+    font-weight: 600;
+    text-decoration-thickness: 0.08em;
   }
 
   .contact {
@@ -251,6 +380,7 @@ const projects = [
 
     .project-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
     }
 
     .footer__inner {
